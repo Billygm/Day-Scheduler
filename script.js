@@ -1,47 +1,54 @@
 var currentDay = $('#currentDay')
 var container = $('.container')
-
 var currentHour = moment().format('H')
-var today = moment().format('dddd, MMMM Do')
-currentDay.text(today)
 
+currentDay.text(moment().format('dddd, MMMM Do'))
+
+// loop from 9-17 (9AM-5PM)
 for (var i = 9; i <= 17; i++) {
+    // translates the time displayed from millitary
     var displayTime = i
     if (i < 12) {
-        displayTime = i + ' am'
+        displayTime = i + 'AM'
     } else if (i === 12) {
-        displayTime = i + ' pm'
+        displayTime = i + 'PM'
     } else if (i > 12) {
-        displayTime = i - 12 + ' pm'
-    } else if (i === 24) {
-        displayTime = i - 12 + ' am'
+        displayTime = i - 12 + 'PM'
+    } else if (i===24) {
+        displayTime = i - 12 + 'AM'
     }
-    // create an HTML block for each hour of the day
-    // saving the current hour to a data atribute so it can be accesssed from an event listener
+   
+    // styles for past, present, and future timeblocks
     var timeblockStyle = ''
     if (i < currentHour) {
-        timeblockStyle = 'background-color: gray;'
+        timeblockStyle = 'background-color: #bc4749; color: #f2e8cf'
     } else if (i == currentHour) {
-        timeblockStyle = 'background-color: red;'
+        timeblockStyle = 'background-color: #ffd166; color: #386641'
     } else {
-        timeblockStyle = 'background-color: green;'
+        timeblockStyle = 'background-color: #6a994e; color: #f2e8cf'
+    }
+    
+    var buttonStyle = 'background-color: #073b4c; color: #6a994e'
+    var displayStyles = 'display:flex'
+
+    // gets the saved tasks for each hour
+    var tasksForHour = localStorage.getItem('hour-' + i)
+    if (!tasksForHour) {
+        tasksForHour = ''
     }
 
-    var savedValueForHour = localStorage.getItem('hour-' + i)
-
-    var timeblockEl = `<div class=my-3 row align-items-stretch text-right p-0'>
-    <label class='p-2 border'>${displayTime}</label>
-    <textarea class='form-control col-10' id='hour-${i}' style='${timeblockStyle}'>${savedValueForHour}</textarea>
-    <button class='btn border p-2 fas fa-lock' type='submit' id='button-addon2'></button>
+    // template litteral creating the html elements for the time blocks
+    var timeblockEl = `<div class='p-0' style='${displayStyles}'>
+    <label class='py-3 border-top border-dark col-1 text-right'>${displayTime}</label>
+    <textarea class='form-control p-3 border-dark' id='hour-${i}' style='${timeblockStyle}'>${tasksForHour}</textarea>
+    <button class='btn far fa-save border-dark col-1' type='submit' style='${buttonStyle}'></button>
     </div>`
-
     container.append(timeblockEl)
-
-
 }
 
+// saves the tasks when the save button is clicked
 var scheduledTask
-container.on('click', 'button', function (event) {
+container.on('click', 'button', function () {
     var input = $(this).siblings('textarea').attr('id')
     scheduledTask = $(this).siblings('textarea').val()
     localStorage.setItem(input, scheduledTask)
