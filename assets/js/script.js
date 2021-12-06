@@ -2,9 +2,9 @@ var currentDay = $('#currentDay')
 var container = $('.container')
 var currentHour = moment().format('H')
 
-setInterval(function(){
-    currentDay.text(moment().format('dddd, MMMM Do hh:mmA'))
-},1000)
+setInterval(function () {
+    currentDay.text(moment().format('dddd, MMMM Do h:mmA'))
+}, 1000)
 // loop from 9-17 (9AM-5PM)
 for (var i = 9; i <= 17; i++) {
     // styles for past, present, and future timeblocks
@@ -16,10 +16,10 @@ for (var i = 9; i <= 17; i++) {
     } else {
         timeblockStyle = 'background-color: #6a994e; color: #f2e8cf'
     }
-    
+
     var buttonStyle = 'background-color: #073b4c; color: #6a994e'
     var displayStyles = 'display:flex'
-    
+
     // gets the saved tasks for each hour
     var tasksForHour = localStorage.getItem('hour-' + i)
     if (!tasksForHour) {
@@ -34,7 +34,7 @@ for (var i = 9; i <= 17; i++) {
         displayTime = i + 'PM'
     } else if (i > 12) {
         displayTime = i - 12 + 'PM'
-    } else if (i===24) {
+    } else if (i === 24) {
         displayTime = i - 12 + 'AM'
     }
 
