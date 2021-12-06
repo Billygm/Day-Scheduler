@@ -8,4 +8,4 @@ Each timeblock can have tasks saved in the users local storage by using the save
 
 [github.com/Billygm/Day-Scheduler](https://github.com/Billygm/Day-Scheduler)
 
-[]()
+[billygm.github.io/Day-Scheduler/](https://billygm.github.io/Day-Scheduler/)
